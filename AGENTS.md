@@ -16,7 +16,9 @@ The project goal is API-level portability between DI providers without leaking p
 - `src/Shintio.DependencyInjection.Adapter.Unity.Zenject/` - Unity Zenject adapter area.
 - `src/Shintio.DependencyInjection.Adapter.Unity.Reflex/` - Unity Reflex adapter area.
 - `sandbox/` - console playground projects (`TestSlimApp`, `TestMicrosoftApp`, `TestLib`) for manual verification/examples.
-- `tests/` - automated tests area (must be used for behavior coverage, not only sandbox checks).
+- `tests/Shintio.DependencyInjection.Tests/` - shared NUnit test kit (`AdapterTestsBase`, common test types) and Unity-local package source for shared tests.
+- `tests/Shintio.DependencyInjection.Tests.Standalone/` - .NET adapter test runner project (inherits shared test base).
+- `tests/Shintio.DependencyInjection.Tests.Unity/` - Unity test project (EditMode tests for Unity adapters).
 
 ## Abstraction contract policy
 - `IServiceRegistrar` is the source-of-truth API. Keep signatures stable and evolution additive where possible.
@@ -38,11 +40,30 @@ The project goal is API-level portability between DI providers without leaking p
 - Unity adapters should avoid hard machine-local dependencies in project files; prefer portable references/workflows.
 - Zenject/Reflex/VContainer adapter parity should be tracked intentionally (do not leave silent partial implementations).
 
+## Testing conventions
+- Primary test framework is `NUnit` for both standalone .NET and Unity parity.
+- Standalone adapter fixtures should use `[FixtureLifeCycle(LifeCycle.InstancePerTestCase)]` to avoid container reuse between test methods.
+- Unity NUnit runner does not support `FixtureLifeCycle(LifeCycle.InstancePerTestCase)` consistently; in Unity tests reset container state via `[SetUp]` and create fresh builders/scopes there.
+- Shared adapter behavior tests belong in `tests/Shintio.DependencyInjection.Tests/AdapterTestsBase.cs`.
+- Adapter-specific tests should stay thin and only provide container wiring (`RegisterServices`, `BuildProvider`).
+- Unity EditMode assembly currently targets:
+  - `Shintio.DependencyInjection.Adapter.Unity.VContainer`
+  - `Shintio.DependencyInjection.Adapter.Unity.Reflex`
+
 ## When changing functionality
 - Abstraction changes: update adapters + sandbox usage examples + tests in the same task.
 - Slim container changes: verify constructor selection, recursion behavior, missing dependency errors, and caching/lifetime behavior.
 - Adapter changes: validate at least one end-to-end registration flow from `sandbox/TestLib`.
 - Any architecture/process change must update this `AGENTS.md`.
+
+## Unity package wiring
+- Unity-facing projects must include:
+  - `package.json`
+  - `.asmdef`
+  - `Directory.Build.props`
+  - `Directory.Build.targets`
+- Local Unity dependencies should be referenced via `file:` paths to repo projects (prefer `src/...` and `tests/...` local packages).
+- Keep Unity-generated solution/project artifacts out of source-of-truth design decisions; authoritative config is `Packages/manifest.json`, package metadata, and asmdefs.
 
 ## Build and test workflow
 - Build from repo root:
