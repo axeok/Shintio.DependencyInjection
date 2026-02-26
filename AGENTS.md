@@ -1,13 +1,16 @@
 # Shintio.DependencyInjection AGENTS.md file
 
 ## Project overview
-Shintio.DependencyInjection is a lightweight DI abstraction layer that lets library/application code register services through a single contract (`IServiceRegistrar`) and then map those registrations to concrete containers (Microsoft DI, Slim container, Unity-oriented adapters).
+Shintio.DependencyInjection is a lightweight DI abstraction layer that lets library/application code register services through a single contract (`IServiceRegistrar`) and then map those registrations to concrete containers (Microsoft DI, Slim container, Autofac, Lamar, SimpleInjector, Unity-oriented adapters).
 The project goal is API-level portability between DI providers without leaking provider-specific types into consumer code.
 
 ## Project structure
 - `src/Shintio.DependencyInjection.Abstractions/` - core public contract: `IServiceRegistrar`, `ServiceProviderProxy`, and extension APIs used by consumers.
 - `src/Shintio.DependencyInjection.Container.Slim/` - minimal in-house container implementation (`ServiceCollection`, `ServiceProvider`) used directly and by Slim adapter.
+- `src/Shintio.DependencyInjection.Adapter.Autofac/` - adapter from abstraction API to Autofac (`ContainerBuilder` registrations).
+- `src/Shintio.DependencyInjection.Adapter.Lamar/` - adapter from abstraction API to Lamar (`ServiceRegistry` registrations).
 - `src/Shintio.DependencyInjection.Adapter.Microsoft/` - adapter from abstraction API to `Microsoft.Extensions.DependencyInjection`.
+- `src/Shintio.DependencyInjection.Adapter.SimpleInjector/` - adapter from abstraction API to SimpleInjector (`Container` registrations).
 - `src/Shintio.DependencyInjection.Adapter.Slim/` - adapter from abstraction API to Slim container APIs.
 - `src/Shintio.DependencyInjection.Adapter.Unity.VContainer/` - adapter for Unity VContainer.
 - `src/Shintio.DependencyInjection.Adapter.Unity.Zenject/` - Unity Zenject adapter area.
@@ -24,12 +27,14 @@ The project goal is API-level portability between DI providers without leaking p
 ## Lifetime and behavior parity
 - The same registration chain should behave as similarly as possible across adapters.
 - Pay special attention to `Transient`, `Scoped`, and `Singleton` semantics; avoid implicit downgrade of lifetimes.
+- For providers that require explicit scope activation (for example, Microsoft DI and SimpleInjector), run scoped behavior checks inside an active scope.
 - If a provider cannot support a feature fully, fail explicitly or document the limitation near adapter code and in this file.
 - Constructor resolution behavior in Slim should stay deterministic and predictable.
 
 ## Adapter implementation rules
 - Keep provider-specific types inside adapter projects only.
 - Avoid referencing Microsoft DI or Unity types from `Abstractions` and `Container.Slim`.
+- Keep package/framework constraints explicit per adapter (example: Lamar package currently targets modern .NET only, not `netstandard2.1`).
 - Unity adapters should avoid hard machine-local dependencies in project files; prefer portable references/workflows.
 - Zenject/Reflex/VContainer adapter parity should be tracked intentionally (do not leave silent partial implementations).
 
