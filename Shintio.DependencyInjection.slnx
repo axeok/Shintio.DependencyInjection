@@ -13,5 +13,7 @@
     <Project Path="src/Shintio.DependencyInjection.Adapter.Unity.Zenject/Shintio.DependencyInjection.Adapter.Unity.Zenject.csproj" />
     <Project Path="src/Shintio.DependencyInjection.Container.Slim/Shintio.DependencyInjection.Container.Slim.csproj" />
   </Folder>
-  <Folder Name="/tests/" />
+  <Folder Name="/tests/">
+    <Project Path="tests/Shintio.DependencyInjection.Tests/Shintio.DependencyInjection.Tests.csproj" />
+  </Folder>
 </Solution>

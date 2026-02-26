@@ -6,35 +6,65 @@ namespace Shintio.DependencyInjection.Container.Slim.Common
 {
 	public class ServiceCollection : IServiceCollection
 	{
-		private readonly Dictionary<Type, Type> _servicesMap = new Dictionary<Type, Type>();
-		private readonly Dictionary<Type, object> _implementations = new Dictionary<Type, object>();
+		private readonly Dictionary<Type, ServiceDescriptor> _descriptors = new Dictionary<Type, ServiceDescriptor>();
 
 		public ServiceCollection()
 		{
-			AddSingleton<IServiceCollection, ServiceCollection>();
-			AddSingleton<ServiceProvider, ServiceProvider>();
+			AddSingleton(typeof(IServiceCollection), this);
+		}
+
+		public IServiceCollection AddTransient(Type serviceType, Type implementationType)
+		{
+			_descriptors[serviceType] = new ServiceDescriptor(serviceType, implementationType, ServiceLifetime.Transient);
+
+			return this;
+		}
+
+		public IServiceCollection AddTransient(Type serviceType, Func<ServiceProvider, object> implementationFactory)
+		{
+			_descriptors[serviceType] = new ServiceDescriptor(serviceType, implementationFactory, ServiceLifetime.Transient);
+
+			return this;
+		}
+
+		public IServiceCollection AddScoped(Type serviceType, Type implementationType)
+		{
+			_descriptors[serviceType] = new ServiceDescriptor(serviceType, implementationType, ServiceLifetime.Scoped);
+
+			return this;
+		}
+
+		public IServiceCollection AddScoped(Type serviceType, Func<ServiceProvider, object> implementationFactory)
+		{
+			_descriptors[serviceType] = new ServiceDescriptor(serviceType, implementationFactory, ServiceLifetime.Scoped);
+
+			return this;
 		}
 
 		public IServiceCollection AddSingleton<TService, TImplementation>()
 			where TService : class
 			where TImplementation : class, TService
 		{
-			_servicesMap[typeof(TService)] = typeof(TImplementation);
-
-			return this;
+			return AddSingleton(typeof(TService), typeof(TImplementation));
 		}
 
 		public IServiceCollection AddSingleton(Type serviceType, Type implementationType)
 		{
-			_servicesMap[serviceType] = implementationType;
+			_descriptors[serviceType] = new ServiceDescriptor(serviceType, implementationType, ServiceLifetime.Singleton);
+
+			return this;
+		}
+
+		public IServiceCollection AddSingleton(Type serviceType, Func<ServiceProvider, object> implementationFactory)
+		{
+			_descriptors[serviceType] = new ServiceDescriptor(serviceType, implementationFactory, ServiceLifetime.Singleton);
 
 			return this;
 		}
 
 		public IServiceCollection AddSingleton(Type serviceType, object implementationInstance)
 		{
-			_servicesMap[serviceType] = implementationInstance.GetType();
-			_implementations[serviceType] = implementationInstance;
+			_descriptors[serviceType] = new ServiceDescriptor(serviceType, implementationInstance);
 
 			return this;
 		}
@@ -47,17 +77,17 @@ namespace Shintio.DependencyInjection.Container.Slim.Common
 
 		public IEnumerable<Type> GetAllServices()
 		{
-			return _servicesMap.Keys;
+			return _descriptors.Keys;
 		}
 
 		public ServiceProvider BuildServiceProvider()
 		{
-			return new ServiceProvider(this, _implementations);
+			return new ServiceProvider(this);
 		}
 
-		public Type? GetService(Type serviceType)
+		public ServiceDescriptor? GetDescriptor(Type serviceType)
 		{
-			return _servicesMap.TryGetValue(serviceType, out var implementationType) ? implementationType : null;
+			return _descriptors.TryGetValue(serviceType, out var descriptor) ? descriptor : null;
 		}
 	}
 }

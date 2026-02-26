@@ -15,24 +15,38 @@ namespace Shintio.DependencyInjection.Adapter.Slim
 
 		public IServiceRegistrar AddTransient(Type serviceType, Type implementationType)
 		{
-			throw new NotImplementedException();
+			_serviceCollection.AddTransient(serviceType, implementationType);
+
+			return this;
 		}
 
 		public IServiceRegistrar AddTransient<TService>(Func<ServiceProviderProxy, TService> implementationFactory)
 			where TService : class
 		{
-			throw new NotImplementedException();
+			_serviceCollection.AddTransient(
+				typeof(TService),
+				serviceProvider => implementationFactory.Invoke(new ServiceProviderProxy(serviceProvider.GetService))
+			);
+
+			return this;
 		}
 
 		public IServiceRegistrar AddScoped(Type serviceType, Type implementationType)
 		{
-			throw new NotImplementedException();
+			_serviceCollection.AddScoped(serviceType, implementationType);
+
+			return this;
 		}
 
 		public IServiceRegistrar AddScoped<TService>(Func<ServiceProviderProxy, TService> implementationFactory)
 			where TService : class
 		{
-			throw new NotImplementedException();
+			_serviceCollection.AddScoped(
+				typeof(TService),
+				serviceProvider => implementationFactory.Invoke(new ServiceProviderProxy(serviceProvider.GetService))
+			);
+
+			return this;
 		}
 
 		public IServiceRegistrar AddSingleton(Type serviceType, Type implementationType)
@@ -45,7 +59,12 @@ namespace Shintio.DependencyInjection.Adapter.Slim
 		public IServiceRegistrar AddSingleton<TService>(Func<ServiceProviderProxy, TService> implementationFactory)
 			where TService : class
 		{
-			throw new NotImplementedException();
+			_serviceCollection.AddSingleton(
+				typeof(TService),
+				serviceProvider => implementationFactory.Invoke(new ServiceProviderProxy(serviceProvider.GetService))
+			);
+
+			return this;
 		}
 
 		public IServiceRegistrar AddSingleton(Type serviceType, object implementationInstance)
