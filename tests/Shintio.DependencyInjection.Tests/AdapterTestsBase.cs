@@ -1,192 +1,192 @@
-﻿using System;
+using System;
+using NUnit.Framework;
 using Shintio.DependencyInjection.Abstractions;
-using Shintio.DependencyInjection.Tests.TestTypes;
-using TestLib;
-using Xunit;
+using Shintio.DependencyInjection.Tests.Common.TestTypes;
 
-namespace Shintio.DependencyInjection.Tests;
-
-public abstract class AdapterTestsBase
+namespace Shintio.DependencyInjection.Tests.Common
 {
-    protected abstract void RegisterServices(Action<IServiceRegistrar> builder);
-    protected abstract ServiceProviderProxy BuildProvider();
-
-    #region Transient
-
-    [Fact]
-    public void TestSimpleTransient()
+    public abstract class AdapterTestsBase
     {
-        RegisterServices(b => b.AddTransient<TestConfigForFactory>());
+        protected abstract void RegisterServices(Action<IServiceRegistrar> builder);
+        protected abstract ServiceProviderProxy BuildProvider();
 
-        var provider = BuildProvider();
+        #region Transient
 
-        var service = provider.GetRequiredService<TestConfigForFactory>();
-
-        Assert.NotNull(service);
-    }
-
-    [Fact]
-    public void TestTransientFactory()
-    {
-        RegisterServices(b => b.AddTransient(p => new TestConfigForFactory()
+        [Test]
+        public void TestSimpleTransient()
         {
-            Message = "From factory",
-        }));
+            RegisterServices(b => b.AddTransient<TestConfigForFactory>());
 
-        var provider = BuildProvider();
+            var provider = BuildProvider();
 
-        var service = provider.GetRequiredService<TestConfigForFactory>();
+            var service = provider.GetRequiredService<TestConfigForFactory>();
 
-        Assert.NotNull(service);
-        Assert.Equal("From factory", service.Message);
-    }
+            Assert.NotNull(service);
+        }
 
-    [Fact]
-    public void TestFullTransient()
-    {
-        RegisterServices(b => b
-            .AddTransient<TestService>()
-            .AddTransient<TestConfigForInstance>()
-            .AddTransient(p => new TestConfigForFactory()
+        [Test]
+        public void TestTransientFactory()
+        {
+            RegisterServices(b => b.AddTransient(p => new TestConfigForFactory
             {
-                Message = "Hello",
-            })
-        );
+                Message = "From factory",
+            }));
 
-        var provider = BuildProvider();
+            var provider = BuildProvider();
 
-        var service = provider.GetRequiredService<TestService>();
+            var service = provider.GetRequiredService<TestConfigForFactory>();
 
-        Assert.NotNull(service);
-        Assert.Equal("Hello Test", service.TestMethod());
-    }
+            Assert.NotNull(service);
+            Assert.AreEqual("From factory", service.Message);
+        }
 
-    #endregion
-
-    #region Scoped
-
-    [Fact]
-    public void TestSimpleScoped()
-    {
-        RegisterServices(b => b.AddScoped<TestConfigForFactory>());
-
-        var provider = BuildProvider();
-
-        var service = provider.GetRequiredService<TestConfigForFactory>();
-
-        Assert.NotNull(service);
-    }
-
-    [Fact]
-    public void TestScopedFactory()
-    {
-        RegisterServices(b => b.AddScoped(p => new TestConfigForFactory()
+        [Test]
+        public void TestFullTransient()
         {
-            Message = "From factory",
-        }));
+            RegisterServices(b => b
+                .AddTransient<TestService>()
+                .AddTransient<TestConfigForInstance>()
+                .AddTransient(p => new TestConfigForFactory
+                {
+                    Message = "Hello",
+                })
+            );
 
-        var provider = BuildProvider();
+            var provider = BuildProvider();
 
-        var service = provider.GetRequiredService<TestConfigForFactory>();
+            var service = provider.GetRequiredService<TestService>();
 
-        Assert.NotNull(service);
-        Assert.Equal("From factory", service.Message);
-    }
+            Assert.NotNull(service);
+            Assert.AreEqual("Hello Test", service.TestMethod());
+        }
 
-    [Fact]
-    public void TestFullScoped()
-    {
-        RegisterServices(b => b
-            .AddScoped<TestService>()
-            .AddScoped<TestConfigForInstance>()
-            .AddScoped(p => new TestConfigForFactory()
+        #endregion
+
+        #region Scoped
+
+        [Test]
+        public void TestSimpleScoped()
+        {
+            RegisterServices(b => b.AddScoped<TestConfigForFactory>());
+
+            var provider = BuildProvider();
+
+            var service = provider.GetRequiredService<TestConfigForFactory>();
+
+            Assert.NotNull(service);
+        }
+
+        [Test]
+        public void TestScopedFactory()
+        {
+            RegisterServices(b => b.AddScoped(p => new TestConfigForFactory
             {
-                Message = "Hello",
-            })
-        );
+                Message = "From factory",
+            }));
 
-        var provider = BuildProvider();
+            var provider = BuildProvider();
 
-        var service = provider.GetRequiredService<TestService>();
+            var service = provider.GetRequiredService<TestConfigForFactory>();
 
-        Assert.NotNull(service);
-        Assert.Equal("Hello Test", service.TestMethod());
-    }
+            Assert.NotNull(service);
+            Assert.AreEqual("From factory", service.Message);
+        }
 
-    #endregion
-
-    #region Singleton
-
-    [Fact]
-    public void TestSimpleSingleton()
-    {
-        RegisterServices(b => b.AddSingleton<TestConfigForFactory>());
-
-        var provider = BuildProvider();
-
-        var service = provider.GetRequiredService<TestConfigForFactory>();
-
-        Assert.NotNull(service);
-    }
-
-    [Fact]
-    public void TestSingletonFactory()
-    {
-        RegisterServices(b => b.AddSingleton(p => new TestConfigForFactory()
+        [Test]
+        public void TestFullScoped()
         {
-            Message = "From factory",
-        }));
+            RegisterServices(b => b
+                .AddScoped<TestService>()
+                .AddScoped<TestConfigForInstance>()
+                .AddScoped(p => new TestConfigForFactory
+                {
+                    Message = "Hello",
+                })
+            );
 
-        var provider = BuildProvider();
+            var provider = BuildProvider();
 
-        var service = provider.GetRequiredService<TestConfigForFactory>();
+            var service = provider.GetRequiredService<TestService>();
 
-        Assert.NotNull(service);
-        Assert.Equal("From factory", service.Message);
-    }
+            Assert.NotNull(service);
+            Assert.AreEqual("Hello Test", service.TestMethod());
+        }
 
-    [Fact]
-    public void TestSingletonInstance()
-    {
-        var instance = new TestConfigForInstance()
+        #endregion
+
+        #region Singleton
+
+        [Test]
+        public void TestSimpleSingleton()
         {
-            Message = "From instance",
-        };
+            RegisterServices(b => b.AddSingleton<TestConfigForFactory>());
 
-        RegisterServices(b => b.AddSingleton(instance));
+            var provider = BuildProvider();
 
-        var provider = BuildProvider();
+            var service = provider.GetRequiredService<TestConfigForFactory>();
 
-        var service = provider.GetRequiredService<TestConfigForInstance>();
+            Assert.NotNull(service);
+        }
 
-        Assert.NotNull(service);
-        Assert.Equal("From instance", service.Message);
-    }
-
-    [Fact]
-    public void TestFullSingleton()
-    {
-        var instance = new TestConfigForInstance()
+        [Test]
+        public void TestSingletonFactory()
         {
-            Message = "World",
-        };
-
-        RegisterServices(b => b
-            .AddSingleton<TestService>()
-            .AddSingleton(instance)
-            .AddSingleton(p => new TestConfigForFactory()
+            RegisterServices(b => b.AddSingleton(p => new TestConfigForFactory
             {
-                Message = "Hello",
-            })
-        );
+                Message = "From factory",
+            }));
 
-        var provider = BuildProvider();
+            var provider = BuildProvider();
 
-        var service = provider.GetRequiredService<TestService>();
+            var service = provider.GetRequiredService<TestConfigForFactory>();
 
-        Assert.NotNull(service);
-        Assert.Equal("Hello World", service.TestMethod());
+            Assert.NotNull(service);
+            Assert.AreEqual("From factory", service.Message);
+        }
+
+        [Test]
+        public void TestSingletonInstance()
+        {
+            var instance = new TestConfigForInstance
+            {
+                Message = "From instance",
+            };
+
+            RegisterServices(b => b.AddSingleton(instance));
+
+            var provider = BuildProvider();
+
+            var service = provider.GetRequiredService<TestConfigForInstance>();
+
+            Assert.NotNull(service);
+            Assert.AreEqual("From instance", service.Message);
+        }
+
+        [Test]
+        public void TestFullSingleton()
+        {
+            var instance = new TestConfigForInstance
+            {
+                Message = "World",
+            };
+
+            RegisterServices(b => b
+                .AddSingleton<TestService>()
+                .AddSingleton(instance)
+                .AddSingleton(p => new TestConfigForFactory
+                {
+                    Message = "Hello",
+                })
+            );
+
+            var provider = BuildProvider();
+
+            var service = provider.GetRequiredService<TestService>();
+
+            Assert.NotNull(service);
+            Assert.AreEqual("Hello World", service.TestMethod());
+        }
+
+        #endregion
     }
-
-    #endregion
 }

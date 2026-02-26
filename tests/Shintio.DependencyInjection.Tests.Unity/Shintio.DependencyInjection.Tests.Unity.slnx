@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="Shintio.DependencyInjection.Unity.csproj" />
+  <Project Path="Shintio.DependencyInjection.Unity.Tests.EditMode.csproj" />
+</Solution>

@@ -1,0 +1,1 @@
+global using Shintio.DependencyInjection.Tests.Common;

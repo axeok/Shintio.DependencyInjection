@@ -1,0 +1,9 @@
+{
+  "name": "shintio.dependencyinjection.tests",
+  "version": "1.0.0",
+  "displayName": "Shintio.DependencyInjection.Tests",
+  "description": "Shared test types for Shintio.DependencyInjection tests",
+  "dependencies": {
+    "shintio.dependencyinjection.abstractions": "1.0.0"
+  }
+}

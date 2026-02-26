@@ -2,75 +2,76 @@
 using Shintio.DependencyInjection.Abstractions;
 using VContainer;
 
-namespace Shintio.DependencyInjection.Adapter.Unity.VContainer;
-
-public class ServiceRegistrar : IServiceRegistrar
+namespace Shintio.DependencyInjection.Adapter.Unity.VContainer
 {
-	private readonly IContainerBuilder _builder;
-
-	public ServiceRegistrar(IContainerBuilder builder)
+	public class ServiceRegistrar : IServiceRegistrar
 	{
-		_builder = builder;
-	}
+		private readonly IContainerBuilder _builder;
 
-	public IServiceRegistrar AddTransient(Type serviceType, Type implementationType)
-	{
-		_builder.Register(serviceType, implementationType, Lifetime.Transient);
+		public ServiceRegistrar(IContainerBuilder builder)
+		{
+			_builder = builder;
+		}
 
-		return this;
-	}
+		public IServiceRegistrar AddTransient(Type serviceType, Type implementationType)
+		{
+			_builder.Register(serviceType, implementationType, Lifetime.Transient);
 
-	public IServiceRegistrar AddTransient<TService>(Func<ServiceProviderProxy, TService> implementationFactory)
-		where TService : class
-	{
-		_builder.Register<TService>(
-			container => implementationFactory.Invoke(new ServiceProviderProxy(t => container.Resolve(t))),
-			Lifetime.Transient
-		);
+			return this;
+		}
 
-		return this;
-	}
+		public IServiceRegistrar AddTransient<TService>(Func<ServiceProviderProxy, TService> implementationFactory)
+			where TService : class
+		{
+			_builder.Register<TService>(
+				container => implementationFactory.Invoke(new ServiceProviderProxy(t => container.Resolve(t))),
+				Lifetime.Transient
+			);
 
-	public IServiceRegistrar AddScoped(Type serviceType, Type implementationType)
-	{
-		_builder.Register(serviceType, implementationType, Lifetime.Scoped);
+			return this;
+		}
 
-		return this;
-	}
+		public IServiceRegistrar AddScoped(Type serviceType, Type implementationType)
+		{
+			_builder.Register(serviceType, implementationType, Lifetime.Scoped);
 
-	public IServiceRegistrar AddScoped<TService>(Func<ServiceProviderProxy, TService> implementationFactory)
-		where TService : class
-	{
-		_builder.Register<TService>(
-			container => implementationFactory.Invoke(new ServiceProviderProxy(t => container.Resolve(t))),
-			Lifetime.Scoped
-		);
+			return this;
+		}
 
-		return this;
-	}
+		public IServiceRegistrar AddScoped<TService>(Func<ServiceProviderProxy, TService> implementationFactory)
+			where TService : class
+		{
+			_builder.Register<TService>(
+				container => implementationFactory.Invoke(new ServiceProviderProxy(t => container.Resolve(t))),
+				Lifetime.Scoped
+			);
 
-	public IServiceRegistrar AddSingleton(Type serviceType, Type implementationType)
-	{
-		_builder.Register(serviceType, implementationType, Lifetime.Singleton);
+			return this;
+		}
 
-		return this;
-	}
+		public IServiceRegistrar AddSingleton(Type serviceType, Type implementationType)
+		{
+			_builder.Register(serviceType, implementationType, Lifetime.Singleton);
 
-	public IServiceRegistrar AddSingleton<TService>(Func<ServiceProviderProxy, TService> implementationFactory)
-		where TService : class
-	{
-		_builder.Register<TService>(
-			container => implementationFactory.Invoke(new ServiceProviderProxy(t => container.Resolve(t))),
-			Lifetime.Singleton
-		);
+			return this;
+		}
 
-		return this;
-	}
+		public IServiceRegistrar AddSingleton<TService>(Func<ServiceProviderProxy, TService> implementationFactory)
+			where TService : class
+		{
+			_builder.Register<TService>(
+				container => implementationFactory.Invoke(new ServiceProviderProxy(t => container.Resolve(t))),
+				Lifetime.Singleton
+			);
 
-	public IServiceRegistrar AddSingleton(Type serviceType, object implementationInstance)
-	{
-		_builder.RegisterInstance(implementationInstance, serviceType);
+			return this;
+		}
 
-		return this;
+		public IServiceRegistrar AddSingleton(Type serviceType, object implementationInstance)
+		{
+			_builder.RegisterInstance(implementationInstance, serviceType);
+
+			return this;
+		}
 	}
 }

@@ -1,6 +1,7 @@
-﻿namespace TestLib;
-
-public class TestConfigForInstance
+namespace Shintio.DependencyInjection.Tests.Common.TestTypes
 {
-	public string Message { get; set; } = "Test";
+	public sealed class TestConfigForInstance
+	{
+		public string Message { get; set; } = "Test";
+	}
 }

@@ -11,12 +11,10 @@
     <Project Path="src/Shintio.DependencyInjection.Adapter.Microsoft/Shintio.DependencyInjection.Adapter.Microsoft.csproj" />
     <Project Path="src/Shintio.DependencyInjection.Adapter.SimpleInjector/Shintio.DependencyInjection.Adapter.SimpleInjector.csproj" />
     <Project Path="src/Shintio.DependencyInjection.Adapter.Slim/Shintio.DependencyInjection.Adapter.Slim.csproj" />
-    <Project Path="src/Shintio.DependencyInjection.Adapter.Unity.Reflex/Shintio.DependencyInjection.Adapter.Unity.Reflex.csproj" />
-    <Project Path="src/Shintio.DependencyInjection.Adapter.Unity.VContainer/Shintio.DependencyInjection.Adapter.Unity.VContainer.csproj" />
-    <Project Path="src/Shintio.DependencyInjection.Adapter.Unity.Zenject/Shintio.DependencyInjection.Adapter.Unity.Zenject.csproj" />
     <Project Path="src/Shintio.DependencyInjection.Container.Slim/Shintio.DependencyInjection.Container.Slim.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Shintio.DependencyInjection.Tests/Shintio.DependencyInjection.Tests.csproj" />
+    <Project Path="tests/Shintio.DependencyInjection.Tests.Standalone/Shintio.DependencyInjection.Tests.Standalone.csproj" />
   </Folder>
 </Solution>

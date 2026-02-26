@@ -1,0 +1,24 @@
+{
+  "name": "Shintio.DependencyInjection.Tests.Unity.EditMode",
+  "references": [
+    "Shintio.DependencyInjection.Tests",
+    "Shintio.DependencyInjection.Abstractions",
+    "Shintio.DependencyInjection.Adapter.Unity.VContainer",
+    "VContainer"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false,
+  "testAssemblies": true,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}

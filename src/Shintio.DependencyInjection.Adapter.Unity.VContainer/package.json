@@ -1,0 +1,10 @@
+{
+  "name": "shintio.dependencyinjection.adapter.unity.vcontainer",
+  "version": "1.0.0",
+  "displayName": "Shintio.DependencyInjection.Adapter.Unity.VContainer",
+  "description": "Unity VContainer adapter for Shintio.DependencyInjection",
+  "dependencies": {
+    "jp.hadashikick.vcontainer": "1.17.0",
+    "shintio.dependencyinjection.abstractions": "1.0.0"
+  }
+}

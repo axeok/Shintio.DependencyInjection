@@ -1,0 +1,7 @@
+{
+  "name": "Shintio.DependencyInjection.Adapter.Unity.VContainer",
+  "references": [
+    "Shintio.DependencyInjection.Abstractions",
+    "VContainer"
+  ]
+}

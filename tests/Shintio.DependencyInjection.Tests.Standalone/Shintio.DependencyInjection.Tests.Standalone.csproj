@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="coverlet.collector" Version="6.0.4"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1"/>
+        <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+        <PackageReference Include="Autofac" Version="9.0.0" />
+        <PackageReference Include="Lamar" Version="15.0.1" Condition="'$(TargetFramework)' == 'net10.0'" />
+        <PackageReference Include="SimpleInjector" Version="5.5.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Shintio.DependencyInjection.Tests\Shintio.DependencyInjection.Tests.csproj" />
+      <ProjectReference Include="..\..\src\Shintio.DependencyInjection.Adapter.Autofac\Shintio.DependencyInjection.Adapter.Autofac.csproj" />
+      <ProjectReference Include="..\..\src\Shintio.DependencyInjection.Adapter.Lamar\Shintio.DependencyInjection.Adapter.Lamar.csproj" />
+      <ProjectReference Include="..\..\src\Shintio.DependencyInjection.Abstractions\Shintio.DependencyInjection.Abstractions.csproj" />
+      <ProjectReference Include="..\..\src\Shintio.DependencyInjection.Adapter.Microsoft\Shintio.DependencyInjection.Adapter.Microsoft.csproj" />
+      <ProjectReference Include="..\..\src\Shintio.DependencyInjection.Adapter.SimpleInjector\Shintio.DependencyInjection.Adapter.SimpleInjector.csproj" />
+      <ProjectReference Include="..\..\src\Shintio.DependencyInjection.Adapter.Slim\Shintio.DependencyInjection.Adapter.Slim.csproj" />
+    </ItemGroup>
+
+</Project>

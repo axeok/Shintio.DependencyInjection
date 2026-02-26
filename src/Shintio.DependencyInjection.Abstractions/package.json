@@ -1,0 +1,6 @@
+{
+  "name": "shintio.dependencyinjection.abstractions",
+  "version": "1.0.0",
+  "displayName": "Shintio.DependencyInjection.Abstractions",
+  "description": "Core abstraction contracts for Shintio.DependencyInjection"
+}

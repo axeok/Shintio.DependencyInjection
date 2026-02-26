@@ -1,20 +1,19 @@
-﻿using TestLib;
-
-namespace Shintio.DependencyInjection.Tests.TestTypes;
-
-public class TestService
+namespace Shintio.DependencyInjection.Tests.Common.TestTypes
 {
-	private readonly TestConfigForFactory _configForFactory;
-	private readonly TestConfigForInstance _configForInstance;
-
-	public TestService(TestConfigForFactory configForFactory, TestConfigForInstance configForInstance)
+	public sealed class TestService
 	{
-		_configForFactory = configForFactory;
-		_configForInstance = configForInstance;
-	}
+		private readonly TestConfigForFactory _configForFactory;
+		private readonly TestConfigForInstance _configForInstance;
 
-	public string TestMethod()
-	{
-		return $"{_configForFactory.Message} {_configForInstance.Message}";
+		public TestService(TestConfigForFactory configForFactory, TestConfigForInstance configForInstance)
+		{
+			_configForFactory = configForFactory;
+			_configForInstance = configForInstance;
+		}
+
+		public string TestMethod()
+		{
+			return $"{_configForFactory.Message} {_configForInstance.Message}";
+		}
 	}
 }

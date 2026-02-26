@@ -1,0 +1,9 @@
+{
+  "name": "Shintio.DependencyInjection.Tests",
+  "references": [
+    "Shintio.DependencyInjection.Abstractions"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

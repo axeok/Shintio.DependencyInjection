@@ -1,6 +1,7 @@
-namespace Shintio.DependencyInjection.Tests.TestTypes;
-
-public sealed class TestConfigForFactory
+namespace Shintio.DependencyInjection.Tests.Common.TestTypes
 {
-    public string Message { get; set; } = "";
+	public sealed class TestConfigForFactory
+	{
+		public string Message { get; set; } = "";
+	}
 }
