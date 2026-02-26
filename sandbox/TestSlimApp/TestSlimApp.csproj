@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Shintio.DependencyInjection.Adapter.Slim\Shintio.DependencyInjection.Adapter.Slim.csproj" />
+      <ProjectReference Include="..\..\src\Shintio.DependencyInjection.Container.Slim\Shintio.DependencyInjection.Container.Slim.csproj" />
+      <ProjectReference Include="..\TestLib\TestLib.csproj" />
+    </ItemGroup>
+
+</Project>
