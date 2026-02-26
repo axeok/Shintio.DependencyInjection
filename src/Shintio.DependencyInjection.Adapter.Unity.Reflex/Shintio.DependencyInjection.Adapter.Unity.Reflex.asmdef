@@ -1,0 +1,7 @@
+{
+  "name": "Shintio.DependencyInjection.Adapter.Unity.Reflex",
+  "references": [
+    "Shintio.DependencyInjection.Abstractions",
+    "Reflex"
+  ]
+}

@@ -5,7 +5,7 @@ using Shintio.DependencyInjection.Adapter.Unity.VContainer;
 using Shintio.DependencyInjection.Tests.Common;
 using VContainer;
 
-namespace Shintio.DependencyInjection.Unity.Tests
+namespace Shintio.DependencyInjection.Tests.Unity
 {
     [TestFixture]
     public sealed class VContainerTests : AdapterTestsBase

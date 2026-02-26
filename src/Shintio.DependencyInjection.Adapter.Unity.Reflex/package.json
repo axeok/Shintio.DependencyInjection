@@ -1,0 +1,10 @@
+{
+  "name": "shintio.dependencyinjection.adapter.unity.reflex",
+  "version": "1.0.0",
+  "displayName": "Shintio.DependencyInjection.Adapter.Unity.Reflex",
+  "description": "Unity Reflex adapter for Shintio.DependencyInjection",
+  "dependencies": {
+    "com.gustavopsantos.reflex": "14.2.0",
+    "shintio.dependencyinjection.abstractions": "1.0.0"
+  }
+}

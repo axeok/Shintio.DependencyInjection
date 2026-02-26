@@ -10,6 +10,13 @@
       },
       "hash": "d76a8df311c48263872be0cd3e6a8ef1a0fa8e59"
     },
+    "com.gustavopsantos.reflex": {
+      "version": "https://github.com/gustavopsantos/reflex.git?path=/Assets/Reflex#14.2.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "b226124433c16fa17df93d667b4c0f456fade89a"
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.10",
       "depth": 0,
@@ -222,6 +229,15 @@
       "depth": 0,
       "source": "local",
       "dependencies": {}
+    },
+    "shintio.dependencyinjection.adapter.unity.reflex": {
+      "version": "file:../../../src/Shintio.DependencyInjection.Adapter.Unity.Reflex",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.gustavopsantos.reflex": "14.2.0",
+        "shintio.dependencyinjection.abstractions": "1.0.0"
+      }
     },
     "shintio.dependencyinjection.adapter.unity.vcontainer": {
       "version": "file:../../../src/Shintio.DependencyInjection.Adapter.Unity.VContainer",

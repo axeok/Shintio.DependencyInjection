@@ -3,7 +3,9 @@
   "references": [
     "Shintio.DependencyInjection.Tests",
     "Shintio.DependencyInjection.Abstractions",
+    "Shintio.DependencyInjection.Adapter.Unity.Reflex",
     "Shintio.DependencyInjection.Adapter.Unity.VContainer",
+    "Reflex",
     "VContainer"
   ],
   "includePlatforms": [
