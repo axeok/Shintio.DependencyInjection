@@ -4,6 +4,7 @@
 		<TargetFrameworks>netstandard2.1;net8.0;net10.0</TargetFrameworks>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<PackageId>Shintio.DependencyInjection.Adapter.Autofac</PackageId>
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
